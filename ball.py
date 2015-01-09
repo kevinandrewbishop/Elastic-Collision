@@ -1,5 +1,6 @@
 from vector import Vector2
 from pygame.locals import *
+from random import random, choice
 import pygame
 import math
 
@@ -31,3 +32,11 @@ class Ball:
 
     def render(self,screen):
         pygame.draw.circle(screen,self.color,(int(self.position.x),int(self.position.y)),self.radius)
+
+
+class RandBall(Ball):
+    def update(self, seconds_passed):
+        if random() < .001:
+            self.velocity = Vector2(choice([-175,175]),choice([-175,175]))
+        self.position += self.velocity*seconds_passed
+        self.velocity *= self.dampening

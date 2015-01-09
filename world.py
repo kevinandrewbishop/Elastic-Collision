@@ -1,7 +1,7 @@
 from random import *
 from mouse import Mouse
 from vector import Vector2
-from ball import Ball
+from ball import Ball, RandBall
 from pygame.locals import *
 import pygame
 import collision
@@ -16,7 +16,7 @@ class World:
         self.background_color = (0,0,0)
         self.mouse = Mouse()
         
-    def set_ball_list(self,n):
+    def set_ball_list(self,n, num_rand_balls = 1):
         ball_count = n
         balls = []
         for i in range(ball_count):
@@ -25,7 +25,10 @@ class World:
             y_pos = randint(0+radius,self.screen_length-radius)
             x_vel = 0
             y_vel = 0
-            self.things[self.thing_index] = Ball(Vector2(x_pos,y_pos),Vector2(x_vel,y_vel),radius,(randint(0,255),randint(0,255),randint(0,255)))
+            if i < num_rand_balls:
+                self.things[self.thing_index] = RandBall(Vector2(x_pos,y_pos),Vector2(x_vel,y_vel),radius,(randint(0,255),randint(0,255),randint(0,255)))
+            else:
+                self.things[self.thing_index] = Ball(Vector2(x_pos,y_pos),Vector2(x_vel,y_vel),radius,(randint(0,255),randint(0,255),randint(0,255)))
             self.thing_index += 1
         
     def check_for_collision(self):
